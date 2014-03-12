@@ -6,7 +6,7 @@ import GraphPredef._
 import ch.inventsoft.graph.vector._
 
 /** Spring layout that uses parallel computations to be faster. */
-object ImmutableParallelSpringLayout {
+object ParallelSpringLayout {
   def apply[N, E[X] <: EdgeLikeIn[X]](graph: Graph[N, E], in: Box3): IncrementalLayout[N] =
     apply(graph, _ => Vector3.random(in))
 
@@ -26,10 +26,10 @@ object ImmutableParallelSpringLayout {
     }
     val nodePos = nodes.map(n => positions(n))
 
-    new ImmutableParallelSpringLayout(nodeMap, springs.toVector, nodePos.toVector)(repulsionConstant, epsilon)
+    new ParallelSpringLayout(nodeMap, springs.toVector, nodePos.toVector)(repulsionConstant, epsilon)
   }
 
-  private class ImmutableParallelSpringLayout[N](lookupMap: Map[N, Int], springs: Vector[Spring], positions: Vector[Vector3])(
+  private class ParallelSpringLayout[N](lookupMap: Map[N, Int], springs: Vector[Spring], positions: Vector[Vector3])(
     implicit repulsionConstant: RepulsionConstant, epsilon: Epsilon)
     extends IncrementalLayout[N] {
 
@@ -37,7 +37,7 @@ object ImmutableParallelSpringLayout {
 
     def improve = {
       val f = (attract _).andThen(repulse)
-      new ImmutableParallelSpringLayout(lookupMap, springs, f(positions))
+      new ParallelSpringLayout(lookupMap, springs, f(positions))
     }
 
     def attract(forces: Vector[Vector3]) = springs.foldLeft(forces) {

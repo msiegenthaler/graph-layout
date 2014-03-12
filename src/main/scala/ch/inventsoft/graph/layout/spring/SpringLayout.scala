@@ -8,7 +8,7 @@ import GraphPredef._
 import ch.inventsoft.graph.vector._
 
 /** Single threaded spring layout. Use when cpu usage must be minimized and graph sizes are small. */
-object ImmutableSpringLayout {
+object SpringLayout{
   def apply[N, E[X] <: EdgeLikeIn[X]](graph: Graph[N, E], in: Box3): IncrementalLayout[N] =
     apply(graph, _ => Vector3.random(in))
 
@@ -27,10 +27,10 @@ object ImmutableSpringLayout {
       Spring(nodeMap(e._1.value), nodeMap(e._2.value), e.weight, springConstant)
     }
     val nodePos = nodes.map(n => positions(n.value))
-    new ImmutableSpringLayout(nodeMap, springs.toVector, nodePos)(repulsionConstant, epsilon)
+    new SpringLayout(nodeMap, springs.toVector, nodePos)(repulsionConstant, epsilon)
   }
 
-  private class ImmutableSpringLayout[N](lookupMap: Map[N, Int], springs: Vector[Spring], positions: Vector[Vector3])(
+  private class SpringLayout[N](lookupMap: Map[N, Int], springs: Vector[Spring], positions: Vector[Vector3])(
     implicit repulsionConstant: RepulsionConstant, epsilon: Epsilon)
     extends IncrementalLayout[N] {
 
@@ -38,7 +38,7 @@ object ImmutableSpringLayout {
 
     def improve = {
       val f = (attract _).andThen(repulse)
-      new ImmutableSpringLayout(lookupMap, springs, f(positions))
+      new SpringLayout(lookupMap, springs, f(positions))
     }
 
     def attract(forces: Vector[Vector3]) = springs.foldLeft(forces) {

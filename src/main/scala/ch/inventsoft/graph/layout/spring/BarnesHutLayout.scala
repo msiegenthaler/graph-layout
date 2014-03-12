@@ -6,7 +6,7 @@ import GraphPredef._
 import ch.inventsoft.graph.vector._
 
 /** Spring layout that uses the barnes hut algorithm for repulsion. Use for larger (> 1000 nodes) graphs. */
-object SpringBarnesHutLayout {
+object BarnesHutLayout {
   def apply[N, E[X] <: EdgeLikeIn[X]](graph: Graph[N, E], in: Box3, theta: Double): IncrementalLayout[N] =
     apply(graph, _ => Vector3.random(in), theta)
 
@@ -27,10 +27,10 @@ object SpringBarnesHutLayout {
     }
     val bodies = nodes.map(n => Body(positions(n.value)))
 
-    new SpringBarnesHutLayout(nodeMap, springs.toVector, bodies)
+    new BarnesHutLayout(nodeMap, springs.toVector, bodies)
   }
 
-  private class SpringBarnesHutLayout[N](
+  private class BarnesHutLayout[N](
     lookupMap: Map[N, Int],
     springs: Vector[Spring],
     bodies: Vector[Body])(
@@ -49,7 +49,7 @@ object SpringBarnesHutLayout {
         forces(spring.node2) += force
       }
 
-      new SpringBarnesHutLayout(lookupMap, springs, forces.view.map(Body).toVector)
+      new BarnesHutLayout(lookupMap, springs, forces.view.map(Body).toVector)
     }
   }
 
