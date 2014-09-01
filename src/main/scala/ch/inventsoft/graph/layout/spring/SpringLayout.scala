@@ -1,6 +1,7 @@
 package ch.inventsoft.graph.layout
 package spring
 
+import scala.language.higherKinds
 import scala.annotation.tailrec
 import scala.collection.immutable.VectorBuilder
 import scalax.collection._

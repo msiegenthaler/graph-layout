@@ -1,6 +1,7 @@
 package ch.inventsoft.graph.layout
 package spring
 
+import scala.language.higherKinds
 import scalax.collection._
 import GraphPredef._
 import ch.inventsoft.graph.vector._
@@ -49,7 +50,7 @@ object BarnesHutLayout {
         forces(spring.node2) += force
       }
 
-      new BarnesHutLayout(lookupMap, springs, forces.view.map(Body).toVector)
+      new BarnesHutLayout(lookupMap, springs, forces.seq.view.map(Body).toVector)
     }
   }
 

@@ -1,6 +1,7 @@
 package ch.inventsoft.graph.layout
 package spring
 
+import scala.language.higherKinds
 import scalax.collection._
 import GraphPredef._
 import ch.inventsoft.graph.vector._
