@@ -30,3 +30,20 @@ publishTo := {
   else
     Some("releases"  at nexus + "service/local/staging/deploy/maven2")
 }
+
+publishArtifact in Test := false
+
+pomIncludeRepository := { _ => false}
+
+pomExtra := (
+  <scm>
+    <url>git@github.com:msiegenthaler/graph-layout</url>
+    <connection>scm:git:git@github.com:msiegenthaler/graph-layout</connection>
+  </scm>
+    <developers>
+      <developer>
+        <id>msiegenthaler</id>
+        <name>Mario Siegenthaler</name>
+        <url>https://github.com/msiegenthaler</url>
+      </developer>
+    </developers>)
