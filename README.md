@@ -11,7 +11,7 @@ Currently supported:
 ## Usage
 ### Add Dependency
 
-    libraryDependencies += "ch.inventsoft.graph" %% "graph-layout" % "1.0.0"
+    libraryDependencies += "ch.inventsoft.graph" %% "graph-layout" % "1.0.2"
 
 ### Basics
 A layout maps the nodes of the graph to positions (Vector3). The definition is (N => Position), so i.e.
